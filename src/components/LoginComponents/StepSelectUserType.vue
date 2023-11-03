@@ -3,11 +3,11 @@
     <span class="text-main-font title-header">Hello Welcome To MyStock</span>
     <span class="text-secundary-font title-subheader">Plis Select Option Bellow</span>
     <div class="button-container text-secundary-font">
-        <v-btn prepend-icon="mdi-account">
+        <v-btn prepend-icon="mdi-account" @click="setNextStep('user')">
             User
         </v-btn>
         <span class="text-middle">OR</span>
-        <v-btn prepend-icon="mdi-domain">
+        <v-btn prepend-icon="mdi-domain"  @click="setNextStep('company')">
             Company
         </v-btn>
     </div>
@@ -27,6 +27,10 @@ export default class StepSelectUserType extends Vue {
 
   mounted() {
     // this.$router.push('/login')
+  }
+
+  setNextStep(userType: string){
+    this.$emit('setStepValue', userType, 2)
   }
 }
 </script>
