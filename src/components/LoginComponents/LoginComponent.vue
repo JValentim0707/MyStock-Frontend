@@ -17,7 +17,6 @@
         <div class="login-content-text">
           <span class="text-secundary-font"><span class="main-login-text">Login</span> Your Account</span>
         </div>
-
         <form class="form-container">
           <div class="form-control-size">
             <CustomInput label="Email Address" type="text"/>
@@ -28,7 +27,8 @@
             <span class="text-secundary-font forgot-text">Forgot Your Password ?</span>
           </div>
           <CustomButton class="btn-form" label="Submit"/>
-          <span class="text-secundary-font"> <span class="contact-us-text"> Contact Us </span> For Get Account</span>
+          <span class="text-secundary-font" v-if="userType === 'company'"> <span class="contact-us-text"> Contact Us </span> For Get Account</span>
+          <span class="text-secundary-font" v-if="userType === 'user'">Join Us<span class="contact-us-text"> Create Account </span> </span>
         </form>
 
       </div>
@@ -53,10 +53,10 @@ import CustomButton from '../../components/Form/CustomButton.vue'
   }
 })
 export default class LoginComponent extends Vue {
-//   msg!: string
+  userType!: string
 
   mounted() {
-    console.log('lgoin')
+    console.log('lgoin', this.userType)
   }
 
   get getTimeZone () {
@@ -97,7 +97,7 @@ export default class LoginComponent extends Vue {
         display: flex;
         flex-direction: column;
         margin-left: 40px;
-        margin-top: 100px;
+        margin-top: 110px;
 
         .main-header-text {
           color: #176FA6;
@@ -116,6 +116,12 @@ export default class LoginComponent extends Vue {
           color: #176FA6;
           font-weight: bold;
         }
+      }
+
+      .icon-container {
+        display: flex;
+        justify-content: center;
+        margin-top: 30px;
       }
 
       .form-container {

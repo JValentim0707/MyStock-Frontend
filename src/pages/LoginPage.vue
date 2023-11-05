@@ -1,7 +1,7 @@
 <template>
   <div class="main-container background-gradient">
    <StepSelectUserType v-if="stepsLogin === 1" @setStepValue="setStepValue"/>
-   <LoginComponent v-if="stepsLogin === 2"/>
+   <LoginComponent v-if="stepsLogin === 2" :userType="userType"/>
   </div>
 </template>
 
@@ -21,6 +21,7 @@ export default class LoginPage extends Vue {
 //   msg!: string
 
 stepsLogin: number = 1
+userType!: string
 
   mounted() {
     console.log('test', this.stepsLogin)
@@ -28,7 +29,7 @@ stepsLogin: number = 1
 
   setStepValue(userType:string, stepLogin: number) {
     this.stepsLogin = stepLogin
-    console.log('dale', userType)
+    this.userType = userType
   }
 }
 </script>
