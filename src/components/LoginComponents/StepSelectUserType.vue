@@ -3,13 +3,13 @@
     <span class="text-main-font title-header">Hello Welcome To MyStock</span>
     <span class="text-secundary-font title-subheader">Plis Select Option Bellow</span>
     <div class="button-container text-secundary-font">
-        <v-btn prepend-icon="mdi-account" @click="setNextStep('user')">
-            User
-        </v-btn>
-        <span class="text-middle">OR</span>
-        <v-btn prepend-icon="mdi-domain"  @click="setNextStep('company')">
-            Company
-        </v-btn>
+      <v-btn prepend-icon="mdi-account" @click="setNextStep('user')">
+          User
+      </v-btn>
+      <span class="text-middle">OR</span>
+      <v-btn prepend-icon="mdi-domain"  @click="setNextStep('company')">
+          Company
+      </v-btn>
     </div>
   </div>
 </template>

@@ -19,14 +19,14 @@
         </div>
         <form class="form-container">
           <div class="form-control-size">
-            <CustomInput label="Email Address" type="text"/>
-            <CustomInput label="Password" type="password"/>
+            <CustomInput label="Email Address" type="text" property="email" @handleValue="handleValue"/>
+            <CustomInput label="Password" type="password"  property="password" @handleValue="handleValue"/>
           </div>
           <div class="login-info">
             <CustomCheckbox label="Remember"/>
             <span class="text-secundary-font forgot-text">Forgot Your Password ?</span>
           </div>
-          <CustomButton class="btn-form" label="Submit"/>
+          <CustomButton class="btn-form" label="Submit" @onClick="loginOnSystem"/>
           <span class="text-secundary-font" v-if="userType === 'company'"> <span class="contact-us-text"> Contact Us </span> For Get Account</span>
           <span class="text-secundary-font" v-if="userType === 'user'">Join Us<span class="contact-us-text"> Create Account </span> </span>
         </form>
@@ -42,6 +42,8 @@ import CustomInput from '../../components/Form/CustomInput.vue'
 import CustomCheckbox from '../../components/Form/CustomCheckbox.vue'
 import CustomButton from '../../components/Form/CustomButton.vue'
 
+import { loginUser } from '../../services/auth'
+
 @Options({
   props: {
     userType: String
@@ -55,19 +57,35 @@ import CustomButton from '../../components/Form/CustomButton.vue'
 export default class LoginComponent extends Vue {
   userType!: string
 
-  mounted() {
-    console.log('lgoin', this.userType)
+  loginData: any = {
+    email: null,
+    password: null
+  }
+
+  async mounted() {
   }
 
   get getTimeZone () {
     const curremtTime = new Date().toLocaleString().split(',')[1]
     const hour: number = Number(curremtTime.split(':')[0])
 
-    if (hour >=  5 && hour <= 12) return 'Good Morning'
-    if (hour >=  13 && hour <= 18) return 'Good Afternoon'
+    if (hour >=  5 && hour <= 11) return 'Good Morning'
+    if (hour >=  12 && hour <= 18) return 'Good Afternoon'
     if (hour <= 5 || hour >=  18) return 'Good Night'
-    return 'test'
+    return 'Good Day'
   }
+
+  handleValue(value: any, property: any) {
+    this.loginData[property] = value
+  }
+
+  async loginOnSystem () {
+    const {user, accessToken: jwtToken} = await loginUser(this.loginData)
+    console.log(user)
+    window.localStorage.setItem('jwtToken', jwtToken.accessToken);
+  }
+
+
 
 }
 </script>

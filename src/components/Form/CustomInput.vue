@@ -6,6 +6,7 @@
       :type="type"
       color="primary"
       variant="underlined"
+      @update:model-value="(value) => setValue(value)"
     ></v-text-field>
   </div>
 </template>
@@ -16,13 +17,18 @@ import { Options, Vue } from 'vue-class-component';
 @Options({
   props: {
     label: String,
-    type: String
+    type: String,
+    property: String
   }
 })
 export default class HelloWorld extends Vue {
-  msg!: string
+  property!: string
 
   mounted() {
+  }
+
+  setValue (value: string) {
+    this.$emit('handleValue', value, this.property)
   }
 }
 </script>

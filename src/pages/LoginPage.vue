@@ -1,7 +1,7 @@
 <template>
   <div class="main-container background-gradient">
-   <StepSelectUserType v-if="stepsLogin === 1" @setStepValue="setStepValue"/>
-   <LoginComponent v-if="stepsLogin === 2" :userType="userType"/>
+    <StepSelectUserType v-if="stepsLogin === 1" @setStepValue="setStepValue"/>
+    <LoginComponent v-if="stepsLogin === 2" :userType="userType"/>
   </div>
 </template>
 
