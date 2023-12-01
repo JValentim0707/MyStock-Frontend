@@ -1,5 +1,6 @@
 import { createRouter, createWebHistory, RouteRecordRaw } from 'vue-router'
-import HomeView from '../views/HomeView.vue'
+
+import { authValidation } from '../middlewares/auth'
 
 import HomePage from '../pages/HomePage.vue'
 
@@ -7,7 +8,16 @@ const routes: Array<RouteRecordRaw> = [
   {
     path: '/',
     name: 'home',
-    component: HomePage
+    component: HomePage,
+    beforeEnter: async (to, from) => {
+      // reject the navigation
+      const validateAuth = await authValidation()
+      if (!validateAuth) {
+        router.push('/login')
+        return validateAuth
+      }
+      return validateAuth
+    },
   },
   {
     path: '/about',

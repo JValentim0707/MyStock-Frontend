@@ -42,6 +42,8 @@ import CustomInput from '../../components/Form/CustomInput.vue'
 import CustomCheckbox from '../../components/Form/CustomCheckbox.vue'
 import CustomButton from '../../components/Form/CustomButton.vue'
 
+import { mapActions } from 'vuex'
+
 import { loginUser } from '../../services/auth'
 
 @Options({
@@ -52,10 +54,19 @@ import { loginUser } from '../../services/auth'
     CustomInput,
     CustomCheckbox,
     CustomButton
+  },
+
+  methods: {
+    ...mapActions('user', {
+      _setUserValue: 'setUserValue' // map `this.add()` to `this.$store.dispatch('increment')`
+    })
   }
 })
 export default class LoginComponent extends Vue {
   userType!: string
+
+  // Store Actions
+  _setUserValue!: Function
 
   loginData: any = {
     email: null,
@@ -64,6 +75,8 @@ export default class LoginComponent extends Vue {
 
   async mounted() {
   }
+
+
 
   get getTimeZone () {
     const curremtTime = new Date().toLocaleString().split(',')[1]
@@ -81,8 +94,14 @@ export default class LoginComponent extends Vue {
 
   async loginOnSystem () {
     const {user, accessToken: jwtToken} = await loginUser(this.loginData)
-    console.log(user)
-    window.localStorage.setItem('jwtToken', jwtToken.accessToken);
+    window.localStorage.setItem('jwtToken', jwtToken);
+
+    this.loginData.email = null
+    this.loginData.password = null
+
+    this._setUserValue({userInfo: user})
+
+    this.$router.push('/')
   }
 
 
